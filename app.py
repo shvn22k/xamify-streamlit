@@ -113,7 +113,7 @@ def create_exam_analysis_workflow(api_key: str, syllabus_text: str, question_pap
 
 # Streamlit App
 async def main():
-    st.title("Xamify.AI : Exam Analysis and Practice Questions Generator")
+    st.title("Xamify : Your AI exam aid")
 
     st.sidebar.header("Upload Files and Keys")
     api_key = st.sidebar.text_input("Enter your Groq API key.", type="password")
