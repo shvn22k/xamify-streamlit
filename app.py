@@ -80,7 +80,11 @@ def create_exam_analysis_workflow(api_key: str, syllabus_text: str, question_pap
     async def run_workflow():
         try:
             syllabus_result = syllabus_agent.run(f"Parse and structure this syllabus content: {syllabus_text}")
+            print(f"Syllabus Result: {syllabus_result}")  # Debugging output
+            
             questions_result = questionpaper_agent.run(f"Parse and structure these question papers: {str(question_papers)}")
+            print(f"Questions Result: {questions_result}")  # Debugging output
+            
             analysis_result = exam_analyser_agent.run(
                 f"""Analyse the following:
                 Syllabus structure: {syllabus_result.content}\n
@@ -88,6 +92,8 @@ def create_exam_analysis_workflow(api_key: str, syllabus_text: str, question_pap
                 
                 Provide analysis of important topics and their frequency."""
             )
+            print(f"Analysis Result: {analysis_result}")  # Debugging output
+            
             practice_questions = question_generator_agent.run(
                 f"""Based on the following information:
                 Question paper patterns: {questions_result.content}
@@ -101,13 +107,15 @@ def create_exam_analysis_workflow(api_key: str, syllabus_text: str, question_pap
                 5. Format as a proper question paper with sections and marks
                 """
             )
+            print(f"Practice Questions Result: {practice_questions}")  # Debugging output
+            
             return {
                 "exam_analysis": analysis_result.content,
                 "practice_questions": practice_questions.content,
             }
         except Exception as e:
-            st.error(f"Damn bro that's a lot of tokens you gave in inputs for a free tier model, maybe reduce the number of question papers.")
-            return {f"Error: {e}"}
+            st.error(f"An error occurred during workflow execution: {e}")
+            return {"exam_analysis": "", "practice_questions": ""}  # Return empty strings to avoid AttributeError
 
     return run_workflow
 
