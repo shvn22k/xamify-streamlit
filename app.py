@@ -164,23 +164,24 @@ async def main():
             st.subheader("Practice Questions")
             st.text_area("Practice Questions", results.get("practice_questions", ""), height=300)
 
-            # Download results
-            if st.button("Download Analysis"):
-                with open("analysis.txt", "w", encoding="utf-8") as f:
-                    f.write(results["exam_analysis"])
-                st.success("Analysis file created!")
+            # Create files for download
+            analysis_file_path = "analysis.txt"
+            questions_file_path = "practice.txt"
 
-            if st.button("Download Questions"):
-                with open("practice.txt", "w", encoding="utf-8") as f:
-                    f.write(results["practice_questions"])
-                st.success("Questions file created!")
+            with open(analysis_file_path, "w", encoding="utf-8") as f:
+                f.write(results["exam_analysis"])
+            st.success("Analysis file created!")
+
+            with open(questions_file_path, "w", encoding="utf-8") as f:
+                f.write(results["practice_questions"])
+            st.success("Questions file created!")
 
             # Ensure download buttons are only shown after files are created
-            if os.path.exists("analysis.txt"):
-                st.download_button("Download Exam Analysis", "analysis.txt", file_name="analysis.txt")
+            if os.path.exists(analysis_file_path):
+                st.download_button("Download Exam Analysis", data=open(analysis_file_path, "rb"), file_name="analysis.txt", mime="text/plain")
 
-            if os.path.exists("practice.txt"):
-                st.download_button("Download Practice Questions", "practice.txt", file_name="practice.txt")
+            if os.path.exists(questions_file_path):
+                st.download_button("Download Practice Questions", data=open(questions_file_path, "rb"), file_name="practice.txt", mime="text/plain")
 
 # Run Streamlit App
 if __name__ == "__main__":
