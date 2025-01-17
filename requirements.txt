@@ -1,0 +1,9 @@
+phidata
+groq
+python-dotenv
+packaging
+fastapi
+uvicorn
+pdfminer.six
+python-multipart
+PyPDF2
