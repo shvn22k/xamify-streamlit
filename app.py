@@ -31,7 +31,7 @@ async def save_file(filename, content, result):
 
 def create_exam_analysis_workflow(api_key: str, syllabus_text: str, question_papers: Dict[int, str]):
     os.environ["GROQ_API_KEY"] = api_key
-    groq_model = Groq(id="llama-3.1-70b-versatile")
+    groq_model = Groq(id="llama-3.3-70b-versatile")
 
     #agent 1
     syllabus_agent = Agent(
